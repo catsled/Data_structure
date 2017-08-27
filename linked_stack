@@ -1,0 +1,64 @@
+使用单链表实现栈
+
+---------------------------------------------------------------------------
+
+之前已经通过python的list实现了栈,为什么要用单链表实现?
+
+首先,python中的列表实际使用的内存空间大于我们想要使用的空间大小,这样会造成资源的浪费,而链表是使用多少空间就占用多少空间.
+
+---------------------------------------------------------------------------
+
+class LinkedStack(object):
+	# ---------创建链表节点----------------
+	class _Node(object):
+		__slots__ = '_element', '_next'
+
+		def __init__(self,element,next):
+			self._element = element
+			self._next = next
+	# ---------栈方法----------------------
+
+	def __init__(self):
+		self._head = None
+		self._size = size
+
+	def __len__(self):
+		return self._size
+
+	def is_empty(self):
+		"""判断栈是否为空"""
+		return len(self) == 0
+
+	def push(self,element):
+		"""向栈中添加元素"""
+		self._head = self._Node(element,self._head)
+		self._size += 1
+
+	def pop(self):
+		"""弹出栈顶元素"""
+		if self.is_empty():
+			raise Empty('栈空')
+		else:
+			result = self._head
+			self._head = self._head._next
+			self._size -= 1
+			return result._element
+
+	def top(self):
+		"""检查栈顶元素"""
+		if self.is_empty():
+			raise Empty('栈空')
+		else:
+			return self._head._element
+---------------------------------------------------------------------------
+
+使用方法:a = LinkedStack() 
+		a.push(1)
+		a.push(2)
+		a.push(3)
+
+		a.pop()
+		a.pop()
+
+---------------------------------------------------------------------------
+
