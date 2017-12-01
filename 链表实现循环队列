@@ -1,0 +1,68 @@
+ 由于链表的高性能,所以使用链表实现循环队列
+
+ --------------------------------------------------------------------------
+
+ 不同于双端队列需要两个引用来同时标记队列的头和尾,循环队列只需要标记队列的尾部,然后
+ 通过tail.next就可以获得队列的头.
+
+ class CircularyQueue(object):
+ 	# -------------------Node---------------------
+ 	class _Node(object):
+ 		__slots__ = '_element', '_next'
+
+ 		def __init__(self,element,next):
+ 			self._element = element
+ 			self._next = next
+ 	# -------------------Method-------------------
+
+ 	def __init__(self):
+ 		self._tail = None
+ 		self._size = 0
+
+ 	def __len__(self):
+ 		return self._size
+
+ 	def is_empty(self):
+ 		return len(self) == 0
+
+ 	def first(self):
+ 		"""查看队列中的第一个元素"""
+ 		if self.is_empty():
+ 			raise Empty('队列为空')
+ 		else:
+ 			head = self._tail._next
+ 			return head._element
+
+ 	def enqueue(self,element):
+ 		"""向队列尾部添加新的元素"""
+ 		new_node = self._Node(element,None)
+ 		if self.is_empty():
+ 			new_node._next = new_node
+ 		else:
+ 			new_node._next = self._tail._next
+ 			self._tail._next = new_node
+ 		self._tail = new_node
+ 		self._size += 1
+
+ 	def dequeue(self):
+ 		"""删除队列中的第一个元素并获得他的值"""
+ 		if self.is_empty():
+ 			raise Empty('队列为空')
+ 		if self._size == 1:
+ 			self._tail = None
+ 		else:
+ 			oldhead = self._tail._next
+ 			self._tail._next = oldhead._next
+ 		self._size -= 1
+ 		return oldhead._element
+
+ 	def rotate(self):
+ 		"""将队首元素变为队尾元素"""
+ 		if self._size > 0:
+ 			self._tail = self._tail._next
+
+
+
+
+
+
